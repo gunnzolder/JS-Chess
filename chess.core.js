@@ -89,9 +89,11 @@ function highlightByCoords(x,y, color){
 }
 
 /*
-	!Hardcode!
 	functions highlightTd() and highlightById() highlight the 
-	<td> directly, as jQuery object and by id
+	<td> directly, as jQuery object and by id.
+
+	They certainly need to be refactored later
+
 */
 
 function highlightById(id, color){
@@ -138,7 +140,6 @@ function highlightByCoordsArray(coords_array, x, y, color) {
 		var this_y=letters.indexOf(y) +  coords_array[a].y;
 		typeof letters[this_y]!='undefined' ? this_y=letters[this_y] : this_y=0;
 		var td=$("#"+this_y+""+this_x);
-		console.log(td);
 		highlightTd(td, color);
 	}
 }
@@ -220,8 +221,6 @@ KING
 */
 
 function highlightKing(x,y, figure, color){
-	coordy = letters.indexOf(y);
-	coordx = parseInt(x)-1;
 	var move=[0,1,-1];
 	var moves=[];
 	for (var a=0;a<3;a++){
@@ -237,6 +236,11 @@ function highlightKing(x,y, figure, color){
 /*
 PAWN
 */
+function highlightPawn(x,y, figure, color){
+	// TODO: write pawn moves
+	figure.parent("td").addClass("highlight");
+}
+
 
 function moveFigure(element) {
 	var offset = element.offset();
