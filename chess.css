@@ -85,6 +85,7 @@ i.white_horse  {background: url(images/white-horse-32.png);}
 i.black_bishop {background: url(images/black-bishop-32.png);}
 i.white_bishop {background: url(images/white-bishop-32.png);}
 i.black_queen {background: url(images/black-queen-32.png);}
+i.black_king {background: url(images/black-king-32.gif);}
 
 .position_output, .another_output {
     float: left;

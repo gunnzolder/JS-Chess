@@ -64,6 +64,7 @@ function highlight(td_id, figure) {
 		if(figure_name.indexOf("horse")>1) highlightHorse(td_x,td_y,figure, color);
 		if(figure_name.indexOf("bishop")>1) highlightBishop(td_x,td_y,figure, color);
 		if(figure_name.indexOf("queen")>1) highlightQueen(td_x,td_y,figure, color);
+		if(figure_name.indexOf("king")>1) highlightKing(td_x,td_y,figure, color);
 		$("#"+td_id).removeClass("beat");
 }
 
@@ -221,7 +222,14 @@ KING
 function highlightKing(x,y, figure, color){
 	coordy = letters.indexOf(y);
 	coordx = parseInt(x)-1;
-
+	var move=[0,1,-1];
+	var moves=[];
+	for (var a=0;a<3;a++){
+		for (var b=0;b<3;b++){
+                moves.push({"x":move[a], "y":move[b]});
+		}
+	}
+	highlightByCoordsArray(moves, x, y, color);
 	figure.parent("td").addClass("highlight");
 }
 
@@ -280,6 +288,7 @@ function drawTable() {
 	$("#b3").append("<i class='black_rook' name='black_rook'></i>");
 	$("#f6").append("<i class='white_bishop' name='white_bishop'></i>");
 	$("#d1").append("<i class='black_queen' name='black_queen'></i>");
+	$("#e1").append("<i class='black_king' name='black_king'></i>");
 	$( "table.generated i" ).draggable(draggable);
 	// higlightBeam(4,3,-1,-1, "white");
 
