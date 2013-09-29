@@ -1,0 +1,100 @@
+/*RESET*/
+html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
+/*RESET*/
+
+body {
+    font-family: helvetica, arial, sans-serif;
+}
+.generated { 
+    float: left; 
+    margin: 20px; 
+    /*border-collapse: separate;
+    border-spacing: 2px;*/
+   animation: scaleUp 1s ease both;
+    -webkit-animation:scaleUp 1s ease both;
+
+}
+
+@-webkit-keyframes scaleUp {
+    0% { opacity: 1; -webkit-transform: scale(.1); }
+    20% { opacity: .2; -webkit-transform: scale(.8); }
+    100% { opacity: 1; -webkit-transform: scale(1); }
+}
+
+@keyframes scaleUp {
+    0% { opacity: 1; transform: scale(.1); }
+    20% { opacity: .2; transform: scale(.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+.generated td {
+    background: #eee;
+    border-radius:2px;
+}
+.generated td {
+    width: 40px;
+    height: 40px;
+    border-radius:2px;
+    position: relative;
+    border:2px solid white;
+}
+
+.generated td.highlight:before {
+    content:"";
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius:2px;
+    background: rgba(255, 255, 0, 0.15);
+    position: absolute;
+    top: 0;
+}
+.generated td.beat:after {
+    content:"";
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius:2px;
+    background: rgba(255, 0, 0, 0.15);
+    position: absolute;
+    top: 0;
+}
+
+.generated th {
+    font-size:12px;
+    color: #ccc;
+    text-align: center;
+}
+.generated tr:nth-child(odd) td:nth-child(even) {
+    background: #ccc;
+}
+.generated tr:nth-child(even) td:nth-child(odd) {
+    background: #ccc;
+}
+
+.generated i {
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 4px;
+    z-index: 999;
+
+}
+
+i.black_rook {background: url(images/black-rook-32.png);}
+i.white_horse  {background: url(images/white-horse-32.png);}
+i.black_bishop {background: url(images/black-bishop-32.png);}
+i.white_bishop {background: url(images/white-bishop-32.png);}
+i.black_queen {background: url(images/black-queen-32.png);}
+
+.position_output, .another_output {
+    float: left;
+    width: 76px;
+    height: 28px;
+    border-radius: 5px;
+    margin: 20px;
+    background: #eee;
+    color: #999;
+    padding: 10px;
+    font-size: 26px;
+    border:2px solid #ccc;
+}
