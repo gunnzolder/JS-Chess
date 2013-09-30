@@ -7,48 +7,49 @@ gunnzolder@gmail.com
 
 (function(b){b.support.touch="ontouchend" in document;if(!b.support.touch){return;}var c=b.ui.mouse.prototype,e=c._mouseInit,a;function d(g,h){if(g.originalEvent.touches.length>1){return;}g.preventDefault();var i=g.originalEvent.changedTouches[0],f=document.createEvent("MouseEvents");f.initMouseEvent(h,true,true,window,1,i.screenX,i.screenY,i.clientX,i.clientY,false,false,false,false,0,null);g.target.dispatchEvent(f);}c._touchStart=function(g){var f=this;if(a||!f._mouseCapture(g.originalEvent.changedTouches[0])){return;}a=true;f._touchMoved=false;d(g,"mouseover");d(g,"mousemove");d(g,"mousedown");};c._touchMove=function(f){if(!a){return;}this._touchMoved=true;d(f,"mousemove");};c._touchEnd=function(f){if(!a){return;}d(f,"mouseup");d(f,"mouseout");if(!this._touchMoved){d(f,"click");}a=false;};c._mouseInit=function(){var f=this;f.element.bind("touchstart",b.proxy(f,"_touchStart")).bind("touchmove",b.proxy(f,"_touchMove")).bind("touchend",b.proxy(f,"_touchEnd"));e.call(f);};})(jQuery);
 
+var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+// CELL SIZE IS MODIFIED HERE
+var cell_size=42;
+// CELL SIZE IS MODIFIED HERE
+
+var draggable_options = { 
+	    grid: [ cell_size, cell_size ],
+	    containment: "table.generated",
+	    // opacity: 0.4,
+	    cursor: "pointer",
+	    start: function() {
+	    	$(".position_output").html("");
+	    	$(".another_output").html("");
+	    },
+	    drag: function(){
+	    	// var left = $(this).css("left");
+	    	// var top = $(this).css("top");
+	    	// var params={
+	    	// 	"width": "44px",
+	    	// 	"height": "44px",
+	    	// 	"position":"absolute",
+	    	// 	"background-size": "cover",
+	    	//  "margin":"-2px"
+	    	//  "left":parseInt(left.substr(0, left.length-2))-6+"px",
+	   		//  "top":parseInt(left.substr(0, left.length-2))-6+"px",
+	    	// };
+	    	// $(this).css(params);
+	    	var td_id=$(this).parent("td").attr("id");
+	    	var figure=$(this);
+	    	highlight(td_id, figure);
+	    },
+	    stop: function(){
+	    	moveFigure($(this));
+			$( "table.generated i" ).draggable(draggable_options);
+			$('td.highlight').removeClass("highlight");
+			$('td.beat').removeClass("beat");
+	    }
+	};
 $(function(){
-	var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-	// CELL SIZE IS MODIFIED HERE
-	var cell_size=42;
-	// CELL SIZE IS MODIFIED HERE
-drawTable();
-$( "table.generated i" ).draggable({ 
-    grid: [ cell_size, cell_size ],
-    containment: "table.generated",
-    // opacity: 0.4,
-    cursor: "pointer",
-    start: function() {
-    	$(".position_output").html("");
-    	$(".another_output").html("");
-    },
-    drag: function(){
-    	// var left = $(this).css("left");
-    	// var top = $(this).css("top");
-    	// var params={
-    	// 	"width": "44px",
-    	// 	"height": "44px",
-    	// 	"position":"absolute",
-    	// 	"background-size": "cover",
-    	// 	// "margin":"-2px"
-    	// 	// "left":parseInt(left.substr(0, left.length-2))-6+"px",
-    	// 	// "top":parseInt(left.substr(0, left.length-2))-6+"px",
-    	// };
-    	// $(this).css(params);
-    	var td_id=$(this).parent("td").attr("id");
-    	var figure=$(this);
-    	highlight(td_id, figure);
-    },
-    stop: function(){
-    	moveFigure($(this));
-		$( "table.generated i" ).draggable(draggable);
-		$('td.highlight').removeClass("highlight");
-		$('td.beat').removeClass("beat");
-    }
+	drawTable();
+	$( "table.generated i" ).draggable(draggable_options);
+	
 });
-
-var draggable=$("table.generated i").draggable("option");
-
 /*
 	highlight() is the first and the base function.
 */
@@ -156,13 +157,10 @@ function tempLetterToNumber(letter) {
 function highlightRook(x,y, figure, color){
 	coordy = letters.indexOf(y);
 	coordx = parseInt(x)-1;
-	// highlightById(x);
-	// highlightById(y);
 	higlightBeam(coordx,coordy,0,1, color);
 	higlightBeam(coordx,coordy,1,0, color);
 	higlightBeam(coordx,coordy,-1,0, color);
 	higlightBeam(coordx,coordy,0,-1, color);
-
 	figure.parent("td").addClass("highlight");
 }
 
@@ -178,7 +176,7 @@ function highlightHorse(x,y, figure, color){
 			if(Math.abs(horse_move[a])!=Math.abs(horse_move[b])) horse_moves.push({"x":horse_move[a], "y":horse_move[b]});
 		}
 	}
-	highlightByCoordsArray(horse_moves, x, y);
+	highlightByCoordsArray(horse_moves, x, y, color);
 	figure.parent("td").addClass("highlight");
 }
 
@@ -196,7 +194,7 @@ function highlightBishop(x,y, figure, color){
 	figure.parent("td").addClass("highlight");
 }
 /*
-highlightQueen() looks to ugly, 
+highlightQueen() looks too ugly, 
 maybe needs to be refactored. 
 
 QUEEN
@@ -214,7 +212,6 @@ function highlightQueen(x,y, figure, color){
 	higlightBeam(coordx,coordy,-1,-1, color);
 	figure.parent("td").addClass("highlight");
 }
-
 
 /*
 KING
@@ -286,17 +283,6 @@ function drawTable() {
 		tr_letters=" <tr><th>&nbsp;</th>"+tr_letters+"</tr>";
 		table="<table class='generated'>"+table+tr_letters+"</table><div class='position_output'></div><div class='another_output'></div>";
 		$("body").prepend(table);
-		$("#a1").append("<i class='white_horse' name='white_horse'></i>");
 	}
 
-	$("#b3").append("<i class='black_rook' name='black_rook'></i>");
-	$("#f6").append("<i class='white_bishop' name='white_bishop'></i>");
-	$("#d1").append("<i class='black_queen' name='black_queen'></i>");
-	$("#e1").append("<i class='black_king' name='black_king'></i>");
-	$( "table.generated i" ).draggable(draggable);
-	// higlightBeam(4,3,-1,-1, "white");
 
-
-
-
-});
